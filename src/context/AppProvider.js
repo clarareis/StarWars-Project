@@ -1,23 +1,20 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import getAPI from '../services/api_request';
 import AppContext from './AppContext';
 
-export default function AppProvider({ children }) {
-/*   const [user, setUser] = useState({
-    meuEstado: '',
-    chave: 'valor',
-  }); */
+function AppProvider({ children }) {
+  const [api, setApi] = useState([]);
 
-  const [planets, setPlanets] = useState([]);
-
+  const fetchApi = async () => {
+    const newPlanets = await getAPI();
+    setApi(newPlanets);
+  };
+  useEffect(() => { fetchApi(); }, []);
+  console.log(api);
   return (
     <AppContext.Provider
-      value={ {
-        // user,
-        // setUser,
-        planets,
-        setPlanets,
-      } }
+      value={ { api } }
     >
       {children}
     </AppContext.Provider>
@@ -27,3 +24,5 @@ export default function AppProvider({ children }) {
 AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default AppProvider;
