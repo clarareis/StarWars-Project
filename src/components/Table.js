@@ -3,7 +3,9 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Table() {
-  const { api } = useContext(AppContext);
+  const { api, namePlanet } = useContext(AppContext);
+  const getFilterPlanet = api.filter((element) => element.name.toLowerCase()
+    .includes(namePlanet.toLowerCase()));
   return (
     <table>
       <thead>
@@ -24,7 +26,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {api.map((planet, index) => (
+        {getFilterPlanet.map((planet, index) => (
           <tr key={ index }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

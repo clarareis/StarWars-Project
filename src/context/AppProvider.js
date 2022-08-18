@@ -5,16 +5,16 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [api, setApi] = useState([]);
+  const [namePlanet, setNamePlanet] = useState('');
 
   const fetchApi = async () => {
     const newPlanets = await getAPI();
     setApi(newPlanets);
   };
   useEffect(() => { fetchApi(); }, []);
-  console.log(api);
   return (
     <AppContext.Provider
-      value={ { api } }
+      value={ { api, namePlanet, setNamePlanet } }
     >
       {children}
     </AppContext.Provider>
