@@ -2,9 +2,30 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Form() {
-  const { namePlanet, setNamePlanet, number, setNumber } = useContext(AppContext);
+  const { api,
+    setApi,
+    namePlanet,
+    setNamePlanet,
+    number,
+    setNumber } = useContext(AppContext);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const dataForm = Object.fromEntries(new FormData(form).entries());
+    const filterAPI = api.filter((element) => {
+      switch (dataForm.operators) {
+      case 'maior que':
+        return +element[dataForm.parameters] > +dataForm.number;
+      case 'menor que':
+        return +element[dataForm.parameters] < +dataForm.number;
+      default:
+        return +element[dataForm.parameters] === +dataForm.number;
+      }
+    });
+    setApi(filterAPI);
+  };
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <label htmlFor="inputName">
         <input
           name="namePlanet"
@@ -18,8 +39,12 @@ export default function Form() {
       <label htmlFor="inputColumn">
         {' '}
         Coluna
-        <select data-testid="column-filter">
-          <option value="population" selected>population</option>
+        <select
+          data-testid="column-filter"
+          name="parameters"
+          defaultValue="population"
+        >
+          <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
           <option value="rotation_period">rotation_period</option>
@@ -29,8 +54,12 @@ export default function Form() {
       <label htmlFor="inputColumn">
         {' '}
         Operador
-        <select data-testid="comparison-filter">
-          <option value="maiorque" selected>maior que</option>
+        <select
+          data-testid="comparison-filter"
+          name="operators"
+          defaultValue="maior que"
+        >
+          <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
@@ -46,8 +75,8 @@ export default function Form() {
         />
       </label>
       <button
-        data-testid="value-filter"
-        type="button"
+        data-testid="button-filter"
+        type="submit"
       >
         Filtrar
       </button>
