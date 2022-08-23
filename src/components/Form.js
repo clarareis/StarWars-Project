@@ -2,30 +2,19 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Form() {
-  const { api,
-    setApi,
+  const {
     namePlanet,
     setNamePlanet,
-    number,
-    setNumber } = useContext(AppContext);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const dataForm = Object.fromEntries(new FormData(form).entries());
-    const filterAPI = api.filter((element) => {
-      switch (dataForm.operators) {
-      case 'maior que':
-        return +element[dataForm.parameters] > +dataForm.number;
-      case 'menor que':
-        return +element[dataForm.parameters] < +dataForm.number;
-      default:
-        return +element[dataForm.parameters] === +dataForm.number;
-      }
-    });
-    setApi(filterAPI);
-  };
+    optionsParameters,
+    handleStoreFilter,
+    addFilterToStore,
+    storeFilter,
+    removeAFilter,
+    storeAppliedFilters,
+    removeAll } = useContext(AppContext);
+
   return (
-    <form onSubmit={ handleSubmit }>
+    <section>
       <label htmlFor="inputName">
         <input
           name="namePlanet"
@@ -42,13 +31,17 @@ export default function Form() {
         <select
           data-testid="column-filter"
           name="parameters"
-          defaultValue="population"
+          onChange={ ({ target }) => handleStoreFilter(target) }
+          value={ storeFilter.parameters }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {optionsParameters.map((option) => (
+            <option
+              key={ option }
+              value={ option }
+            >
+              {option}
+            </option>
+          ))}
         </select>
       </label>
       <label htmlFor="inputColumn">
@@ -57,7 +50,8 @@ export default function Form() {
         <select
           data-testid="comparison-filter"
           name="operators"
-          defaultValue="maior que"
+          onChange={ ({ target }) => handleStoreFilter(target) }
+          value={ storeFilter.operators }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -68,18 +62,40 @@ export default function Form() {
         <input
           name="number"
           id="inputNumber"
-          value={ number }
+          value={ storeFilter.number }
           type="number"
           data-testid="value-filter"
-          onChange={ (event) => setNumber(event.target.value) }
+          onChange={ ({ target }) => handleStoreFilter(target) }
         />
       </label>
       <button
         data-testid="button-filter"
-        type="submit"
+        type="button"
+        onClick={ addFilterToStore }
       >
         Filtrar
       </button>
-    </form>
+      {storeAppliedFilters && storeAppliedFilters.map((myFilters) => (
+        <section
+          data-testid="filter"
+          key={ myFilters.parameters }
+        >
+          <button
+            key={ myFilters.parameters }
+            type="button"
+            onClick={ () => removeAFilter(myFilters) }
+          >
+            {myFilters.parameters}
+          </button>
+        </section>
+      ))}
+      <button
+        data-testid="button-remove-filters"
+        type="button"
+        onClick={ removeAll }
+      >
+        Remove All Filters
+      </button>
+    </section>
   );
 }
