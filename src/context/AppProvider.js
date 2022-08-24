@@ -24,6 +24,11 @@ function AppProvider({ children }) {
   const removeAll = () => {
     setStoreAppliedFilters([]);
     setApiFilter(api);
+    setOptionsParameters(['population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water']);
   };
 
   const fetchApi = async () => {
