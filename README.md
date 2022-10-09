@@ -1,16 +1,26 @@
-# 🚧 README em construção 🚧
+# Boas-vindas ao repositório do projeto Star Wars Planets Search!
 
-<!-- Olá, Tryber!
+Este projeto foi realizado individualmente e desenvolvido em 02 dias.
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+<details>
+  <summary><strong>:memo: Habilidades Desenvolvidas</strong></summary><br />
 
-É essencial que você preencha esse documento por conta própria, ok?
+  * Utilização de  a _Context API_ do **React** para gerenciar estado.
+  * Utilização do _React Hook useState_;
+  * Utilização do _React Hook useContext_;
+  * Utilização do _React Hook useEffect_;
+  * Criação de _React Hooks_ customizados.
+  * Escrita de testes para garantir boa cobertura de testes na aplicação.
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
+</details>
 
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
+<details>
+  <summary><strong>:memo: Instruções para rodar essa aplicação</strong></summary><br />
 
--->
+Crie um fork desse projeto e para isso siga esse [tutorial de como realizar um fork](https://guides.github.com/activities/forking/).
+
+Após feito o fork, clone o repositório criado para o seu computador.
+
+Rode o `npm install`.
+
+</details>
